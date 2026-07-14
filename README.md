@@ -4,18 +4,24 @@ Extracts structured fashion attributes (category, silhouette, fabric,
 neckline, sleeve, length, embellishment, color) from free-text product
 descriptions using TF-IDF + LinearSVC, one classifier per attribute.
 
+## 🎥 Demo Video
+
+Download and watch the demo here:
+
+[▶️ Product Attribute Extraction Demo](demo/demo.mp4)
+
+
 ## Folder Structure
 
 ```
 product-attribute-extraction/
 │
 ├── dataset/
-│   └── product_attribute_dataset_200.csv   # 200-row sample dataset
+│   └── product_attribute_dataset.csv
 │
 ├── src/
 │   ├── preprocess.py    # text cleaning, TF-IDF, train/test split
 │   ├── train.py         # trains + saves all models and encoders
-│   └── predict.py       # CLI: predict attributes for one description
 │
 ├── models/              # populated by train.py
 │   ├── tfidf.pkl
@@ -50,28 +56,8 @@ This will:
 - write `../models/evaluation.csv` with accuracy / precision / recall / F1
   for each attribute on the held-out 20% test split
 
-## 2. Predict from the command line
 
-```bash
-cd src
-python predict.py "Elegant chiffon bridesmaid dress with V neckline, pleated bodice and sage color."
-```
-
-Example output:
-
-```
-Extracted Attributes:
-  category       : Bridesmaid Dress
-  silhouette     : A-Line
-  fabric         : Chiffon
-  neckline       : V-Neck
-  sleeve         : Sleeveless
-  length         : Floor
-  embellishment  : Pleats
-  color          : Sage
-```
-
-## 3. Serve predictions via API
+## 2. Serve predictions via API
 
 ```bash
 cd api
@@ -101,13 +87,3 @@ Response:
 }
 ```
 
-## Notes on the sample dataset
-
-`dataset/product_attribute_dataset_200.csv` here is a **synthetically
-generated** 200-row dataset (templated descriptions) so the whole
-pipeline runs end-to-end out of the box. Swap in your real labeled
-dataset (same column names: `description`, `category`, `silhouette`,
-`fabric`, `neckline`, `sleeve`, `length`, `embellishment`, `color`) and
-re-run `train.py` — the near-perfect scores you'd see on the synthetic
-data are an artifact of its templated, low-noise nature and are not
-representative of accuracy on real-world listings.
